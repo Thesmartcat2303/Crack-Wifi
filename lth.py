@@ -762,11 +762,10 @@ class Companion:
         return False
 
     def __credentialPrint(self, wps_pin=None, wpa_psk=None, essid=None):
-        print(f"{} WPS PIN: '{wps_pin}'".format(ok))
-        print(f"{} WPA PSK: '{wpa_psk}'".format(ok))
-        print(f"{} AP SSID: '{essid}'".format(ok))
+        print("{} WPS PIN: '{}'".format(ok, wps_pin))
+        print("{} WPA PSK: '{}'".format(ok, wpa_psk))
+        print("{} AP SSID: '{}'".format(ok, essid))
 
-        # Nếu không có pass thì bỏ qua
         if not wpa_psk or not essid:
             return
 
@@ -780,24 +779,22 @@ class Companion:
             list_path = "/sdcard/Download/list.txt"
             os.makedirs(os.path.dirname(list_path), exist_ok=True)
 
-            # Đọc file nếu có, để kiểm tra SSID đã lưu chưa
             idx = 1
             if os.path.exists(list_path):
                 with open(list_path, "r", encoding="utf-8") as f:
                     lines = f.readlines()
                     if any(essid in line for line in lines):
-                        return  # Bỏ qua nếu đã có SSID này
+                        return
                     idx = len(lines) + 1
 
-            # Ghi mới vào file
-            entry = f"{idx}. SSID: {essid}; Pass: {wpa_psk}\n"
+            entry = "{}. SSID: {}; Pass: {}\n".format(idx, essid, wpa_psk)
             with open(list_path, "a", encoding="utf-8") as f:
                 f.write(entry)
 
-            print(f"{} Đã lưu vào /sdcard/Download/list.txt".format(ok))
+            print("{} Đã lưu vào /sdcard/Download/list.txt".format(ok))
 
         except Exception as e:
-            print(f"{} Lỗi khi lưu file list.txt: {e}".format(err))
+            print("{} Lỗi khi lưu file list.txt: {}".format(err, e))
     def __saveResult(self, bssid, essid, wps_pin, wpa_psk):
         if not os.path.exists(self.reports_dir):
             os.makedirs(self.reports_dir)

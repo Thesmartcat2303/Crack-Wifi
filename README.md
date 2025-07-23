@@ -43,10 +43,12 @@ cd Crack-Wifi-1
 chmod +x lth.py
 ```
 
-#### lệnh hỗ trợ :
+#### lệnh xóa file  :
 ```bash
-sudo python main --help
+cd 
 ```
+```bash
+sudo rm -rf Crack-Wifi-1
 #### Lệnh sử dụng :
 ```bash
 cd Crack-Wifi-1

@@ -45,15 +45,18 @@ chmod +x lth.py
 
 #### lệnh xóa file  :
 ```bash
-cd 
+cd
 ```
 ```bash
 sudo rm -rf Crack-Wifi-1
-#### Lệnh sử dụng :
+```
 ```bash
 cd Crack-Wifi-1
 ```
-
+# Lệnh sử dụng
+```bash
+cd Crack-Wifi-1
+```
 ```bash
 sudo python lth.py -i wlan0 -K
 ```

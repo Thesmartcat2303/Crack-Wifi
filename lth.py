@@ -59,9 +59,9 @@ def save_entry(ssid, pin, psk, file_path="store/wipwn_crack_data.txt"):
         with open(file_path, "a") as file:
             file.write(entry)
 
-        print(f"Luu du lieu thanh cong tai: {file_path}")
+        print(f"Lưu dữ liệu thành công tại : {file_path}")
     except Exception as e:
-        print(f"Loi khi luu du lieu: {e}")
+        print(f"Lỗi khi lưu dữ liệu: {e}")
 
 
 def isAndroid():
@@ -87,7 +87,7 @@ class AndroidNetwork:
 
     def disableWifi(self, force_disable: bool = False, whisper: bool = False):
         if not whisper:
-            print(f'{info} Android: Dang tat wifi')
+            print(f'{info} Đang tắt wifi !!!')
 
         wifi_disable_scanner_cmd = ['cmd', 'wifi', 'set-wifi-enabled', 'disabled']
         wifi_disable_always_scanning_cmd = ['cmd', '-w', 'wifi', 'set-scan-always-available', 'disabled']
@@ -101,11 +101,11 @@ class AndroidNetwork:
             time.sleep(3)
 
         except subprocess.CalledProcessError as e:
-            print(f"{err} Loi khi tat wifi : {e}")
+            print(f"{err} Lỗi khi tắt Wifi : {e}")
 
     def enableWifi(self, force_enable: bool = False, whisper: bool = False):
         if not whisper:
-            print(f'{info} Android: Dang bat wifi')
+            print(f'{info} Đang bật Wifi !!!')
 
         wifi_enable_scanner_cmd = ['cmd', 'wifi', 'set-wifi-enabled', 'enabled']
         wifi_enable_always_scanning_cmd = ['cmd', '-w', 'wifi', 'set-scan-always-available', 'enabled']
@@ -117,7 +117,7 @@ class AndroidNetwork:
                 subprocess.run(wifi_enable_always_scanning_cmd, check=True)
 
         except subprocess.CalledProcessError as e:
-            print(f"{err} Loi khi bat wifi: {e}")
+            print(f"{err} Lỗi khi bật Wifi : {e}")
 
             
 class NetworkAddress:
@@ -129,7 +129,7 @@ class NetworkAddress:
             self._str_repr = mac.replace('-', ':').replace('.', ':').upper()
             self._int_repr = self._mac2int(mac)
         else:
-            raise ValueError(f'{info} Dia chi MAC phai la chuoi hoac so')
+            raise ValueError(f'{info} Địa chỉ MAC phải là chuỗi hoặc số !!!')
 
     @property
     def string(self):
@@ -610,7 +610,7 @@ class Companion:
         atexit.register(self.cleanup)
 
     def __init_wpa_supplicant(self):
-        print(f'{info} Dang chay wpa_supplicant…')
+        print(f'{info} Đang chạy wpa_supplicant…')
         cmd = 'wpa_supplicant -K -d -Dnl80211,wext,hostapd,wired -i{} -c{}'.format(self.interface, self.tempconf)
         self.wpas = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                                      stderr=subprocess.STDOUT, encoding='utf-8', errors='replace')
@@ -668,7 +668,7 @@ class Companion:
             elif 'Received WSC_NACK' in line:
                 self.connection_status.status = 'WSC_NACK'
                 print(f'{info} Received WSC NACK')
-                print(f'{err} Error: wrong PIN code')
+                print(f'{err} Error: Sai mã PIN T_T ')
             elif 'Enrollee Nonce' in line and 'hexdump' in line:
                 self.pixie_creds.e_nonce = get_hex(line)
                 assert(len(self.pixie_creds.e_nonce) == 16*2)
@@ -722,29 +722,29 @@ class Companion:
             self.connection_status.status = 'associating'
             if 'SSID' in line:
                 self.connection_status.essid = codecs.decode("'".join(line.split("'")[1:-1]), 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
-            print(f'{info} Dang ket noi toi AP…')
+            print(f'{info} Đang kết nối tới AP…')
         elif ('Associated with' in line) and (self.interface in line):
             bssid = line.split()[-1].upper()
             if self.connection_status.essid:
-                print(ok + ' Ket noi voi {} (ESSID: {}) '.format(bssid, self.connection_status.essid))
+                print(ok + ' Kết nối với {} (ESSID: {}) '.format(bssid, self.connection_status.essid))
             else:
-                print(ok + ' da ket noi voi {}'.format(bssid))
+                print(ok + ' Đã kết nối với {}'.format(bssid))
         elif 'EAPOL: txStart' in line:
             self.connection_status.status = 'eapol_start'
-            print(f'{info} Dang gui bat dau EAPOL…')
+            print(f'{info} Đang gửi bắt đầu EAPOL…')
         elif 'EAP entering state IDENTITY' in line:
-            print(f'{info} Dang gui yeu cau xac thuc')
+            print(f'{info} Đang gửi y/c xác thực ')
         elif 'using real identity' in line:
-            print(f'{info} Dang gui phan hoi xac thuc')
+            print(f'{info} Đang nhận phản hồi xác thực ')
         elif pbc_mode and ('selected BSS ' in line):
             bssid = line.split('selected BSS ')[-1].split()[0].upper()
             self.connection_status.bssid = bssid
-            print(info + ' Da chon AP: {}'.format(bssid))
+            print(info + ' Đã chọn AP : {}'.format(bssid))
 
         return True
 
     def __runPixiewps(self, showcmd=False, full_range=False):
-        print(f"{info} Running Pixiewps…")
+        print(f"{info} Đang chạy…")
         cmd = self.pixie_creds.get_pixie_cmd(full_range)
         if showcmd:
             print(cmd)
@@ -862,7 +862,7 @@ class Companion:
                 print(f"{info} Starting WPS push button connection…")
                 cmd = 'WPS_PBC'
         else:
-            print(f"{info} Dang thu PIN '{pin}'…")
+            print(f"{info} Đang thử PIN '{pin}'…")
             cmd = f'WPS_REG {bssid} {pin}'
         r = self.sendAndReceive(cmd)
         if 'OK' not in r:

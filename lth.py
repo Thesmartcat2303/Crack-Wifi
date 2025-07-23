@@ -761,26 +761,44 @@ class Companion:
                     return pin
         return False
 
-    def __credentialPrint(self, wps_pin=None, wpa_psk=None, essid=None):
-        print(f"{ok} WPS PIN: '{wps_pin}'")
-        print(f"{ok} WPA PSK: '{wpa_psk}'")
-        print(f"{ok} AP SSID: '{essid}'")
-        save_entry(
-            ssid=essid,
-            pin=wps_pin,
-            psk=wpa_psk
-        )
+ def __credentialPrint(self, wps_pin=None, wpa_psk=None, essid=None):
+    print(f"{ok} WPS PIN: '{wps_pin}'")
+    print(f"{ok} WPA PSK: '{wpa_psk}'")
+    print(f"{ok} AP SSID: '{essid}'")
 
-    def __saveResult(self, bssid, essid, wps_pin, wpa_psk):
-        if not os.path.exists(self.reports_dir):
-            os.makedirs(self.reports_dir)
-        filename = self.reports_dir + 'stored'
-        dateStr = datetime.now().strftime("%d.%m.%Y %H:%M")
-        with open(filename + '.txt', 'a', encoding='utf-8') as file:
-            file.write('{}\nBSSID: {}\nESSID: {}\nWPS PIN: {}\nWPA PSK: {}\n\n'.format(
-                        dateStr, bssid, essid, wps_pin, wpa_psk
-                    )
-            )
+    # Nếu không có pass thì bỏ qua
+    if not wpa_psk or not essid:
+        return
+
+    save_entry(
+        ssid=essid,
+        pin=wps_pin,
+        psk=wpa_psk
+    )
+
+    try:
+        list_path = "/sdcard/Download/list.txt"
+        os.makedirs(os.path.dirname(list_path), exist_ok=True)
+
+        # Đọc file nếu có, để kiểm tra SSID đã lưu chưa
+        idx = 1
+        if os.path.exists(list_path):
+            with open(list_path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+                if any(essid in line for line in lines):
+                    return  # Bỏ qua nếu đã có SSID này
+                idx = len(lines) + 1
+
+        # Ghi mới vào file
+        entry = f"{idx}. SSID: {essid}; Pass: {wpa_psk}\n"
+        with open(list_path, "a", encoding="utf-8") as f:
+            f.write(entry)
+
+        print(f"{ok} Đã lưu vào /sdcard/Download/list.txt")
+
+    except Exception as e:
+        print(f"{err} Lỗi khi lưu file list.txt: {e}")
+        
         writeTableHeader = not os.path.isfile(filename + '.csv')
         with open(filename + '.csv', 'a', newline='', encoding='utf-8') as file:
             csvWriter = csv.writer(file, delimiter=';', quoting=csv.QUOTE_ALL)

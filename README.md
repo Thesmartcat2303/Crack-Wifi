@@ -17,7 +17,7 @@ Lưu ý : Tool này nhằm mục đích giáo dục, thử nghiệm. Tuyệt đ�
 pkg update && pkg upgrade -y
 pkg install root-repo -y
 pkg install git tsu python wpa-supplicant pixiewps iw openssl -y
-git clone https://github.com/lth1503/Crack-Wifi-1
+git clone https://github.com/Thesmartcat2303/Crack-Wifi.git
 cd Crack-Wifi-1
 chmod +x lth.py
 ```
@@ -34,10 +34,10 @@ pkg install root-repo -y
 pkg install git tsu python wpa-supplicant pixiewps iw openssl -y
 ```
 ```bash
-git clone [[https://github.com/Thesmartcat2303/Crack-Wifi.git]
+git clone https://github.com/Thesmartcat2303/Crack-Wifi.git
 ```
 ```bash
-cd Crack-Wifi-1
+cd Crack-Wifi
 ```
 ```bash
 chmod +x lth.py

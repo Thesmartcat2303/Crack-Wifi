@@ -34,7 +34,7 @@ pkg install root-repo -y
 pkg install git tsu python wpa-supplicant pixiewps iw openssl -y
 ```
 ```bash
-git clone https://github.com/lth1503/Crack-Wifi-1
+git clone [[https://github.com/Thesmartcat2303/Crack-Wifi.git]
 ```
 ```bash
 cd Crack-Wifi-1

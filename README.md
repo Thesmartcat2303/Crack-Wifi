@@ -18,7 +18,7 @@ pkg update && pkg upgrade -y
 pkg install root-repo -y
 pkg install git tsu python wpa-supplicant pixiewps iw openssl -y
 git clone https://github.com/Thesmartcat2303/Crack-Wifi.git
-cd Crack-Wifi-1
+cd Crack-Wifi
 chmod +x lth.py
 ```
 # Nhập thủ công và lưu ý:
@@ -71,10 +71,3 @@ bash lth.sh
 • Màu trắng là <50%
 
 • Màu vàng là 50%
-
-
-
-
-### ❤️ Cảm ơn vì 🌟 và forks
-[![Stargazers repo danh sách cho @anbuinfosec/wipwn](https://reporoster.com/stars/dark/anbuinfosec/wipwn)](https://github.com/anbuinfosec/wipwn/stargazers)
-[![Forkers repo roster for @anbuinfosec/wipwn](https://reporoster.com/forks/dark/anbuinfosec/wipwn)](https://github.com/anbuinfosec/wipwn/network/members)
